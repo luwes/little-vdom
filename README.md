@@ -7,7 +7,7 @@
 
 ---
 
-- 600B Virtual DOM
+- 650B Virtual DOM
 - Components
 - State
 - Diffing

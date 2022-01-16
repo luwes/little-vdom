@@ -75,23 +75,21 @@ const diff = (newVNode, dom, oldVNode, currentChildIndex) => {
         const { key, ref, ...newProps } = newVNode._props;
         if (ref) ref.current = newDom;
 
-        for (const name in newProps) {
+        for (let name in newProps) {
           const value = newProps[name];
-
           // A string object has a trim method.
           if (name === 'style' && !value.trim) {
             for (const n in value) {
               newDom.style[n] = value[n];
             }
-          } else if (
-            value != (oldVNode._props && oldVNode._props[name]) &&
-            name in newDom
-          ) {
-            newDom[name] = value;
-          } else if (value != null) {
-            newDom.setAttribute(name, value);
-          } else {
-            newDom.removeAttribute(name);
+          } else if (value != (oldVNode._props && oldVNode._props[name])) {
+            if (name in newDom || (name = name.toLowerCase()) in newDom) {
+              newDom[name] = value;
+            } else if (value != null) {
+              newDom.setAttribute(name, value);
+            } else {
+              newDom.removeAttribute(name);
+            }
           }
         }
       }

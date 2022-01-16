@@ -25,7 +25,7 @@
 import { expect } from '@esm-bundle/chai';
 import { h, Fragment, render } from '../little-vdom.js';
 import { clearLog, getLog, logCall } from './_util/logCall.js';
-import { setupScratch, teardown } from './_util/helpers.js';
+import { setupScratch, teardown, serializeHtml } from './_util/helpers.js';
 
 describe('all', () => {
   let scratch;
@@ -77,6 +77,17 @@ describe('all', () => {
     values.splice(from, 1);
     values.splice(to, 0, value);
   }
+
+
+  it('should register on* functions as handlers', () => {
+    let count = 0;
+    let onclick = () => (++count);
+
+    render(<div onClick={onclick} />, scratch);
+    expect(scratch.childNodes[0].attributes.length).to.equal(0);
+    scratch.childNodes[0].click();
+    expect(count).to.equal(1);
+  });
 
   // render.test.js
 
@@ -405,5 +416,47 @@ describe('all', () => {
     console.log(getLog());
     expect(scratch.textContent).to.equal('21');
   });
+
+  // refs.test.js
+
+  it('should support createRef', () => {
+    const r = { current: null };
+    expect(r.current).to.equal(null);
+
+    render(<div ref={r} />, scratch);
+    expect(r.current).to.equal(scratch.firstChild);
+  });
+
+  // createRoot.js
+
+  it('should apply string attributes', () => {
+    render(<div foo="bar" data-foo="databar" />, scratch);
+    expect(serializeHtml(scratch)).to.equal(
+      '<div data-foo="databar" foo="bar"></div>'
+    );
+  });
+
+  it('should apply class as String', () => {
+    render(<div class="foo" />, scratch);
+    expect(scratch.childNodes[0]).to.have.property('className', 'foo');
+  });
+
+  it('should set checked attribute on custom elements without checked property', () => {
+    render(<o-checkbox checked />, scratch);
+    expect(scratch.innerHTML).to.equal(
+      '<o-checkbox checked="true"></o-checkbox>'
+    );
+  });
+
+  it('should set value attribute on custom elements without value property', () => {
+    render(<o-input value="test" />, scratch);
+    expect(scratch.innerHTML).to.equal('<o-input value="test"></o-input>');
+  });
+
+  it('should mask value on password input elements', () => {
+    render(<input value="xyz" type="password" />, scratch);
+    expect(scratch.innerHTML).to.equal('<input type="password">');
+  });
+
 
 });
