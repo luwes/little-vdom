@@ -1,0 +1,60 @@
+{
+  "name": "little-vdom",
+  "version": "0.3.0",
+  "description": "Fork from developit/little-vdom",
+  "type": "module",
+  "main": "dist/little-vdom.js",
+  "scripts": {
+    "lint": "eslint '*.{js,jsx}'",
+    "build": "npm run minify && npm run size",
+    "minify": "terser little-vdom.js -c -m toplevel=true --mangle-props regex=/^_/ -o dist/little-vdom.js",
+    "size": "echo \"gzip: $(cat dist/little-vdom.js | gzip -c9 | wc -c)\" && echo \"brotli: $(cat dist/little-vdom.js | brotli | wc -c)\" && echo ''",
+    "test": "web-test-runner test.jsx",
+    "test:watch": "web-test-runner test.jsx --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@web/dev-server": "0.1.29",
+    "@web/dev-server-esbuild": "0.2.16",
+    "@web/test-runner": "^0.13.25",
+    "eslint": "^8.6.0",
+    "eslint-plugin-react": "^7.28.0",
+    "prettier": "^2.5.1",
+    "terser": "^5.10.0"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true,
+    "semi": true
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "mocha": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "settings": {
+      "react": {
+        "pragma": "h"
+      }
+    },
+    "rules": {
+      "no-shadow": "error",
+      "react/prop-types": 0,
+      "react/no-unknown-property": [2, { "ignore": ["class"] }]
+    }
+  }
+}
