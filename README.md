@@ -2,6 +2,11 @@
 
 > Forked from developit's [little-vdom](https://gist.github.com/developit/2038b141b31287faa663f410b6649a87) gist.
 
+**npm**: `npm i @luwes/little-vdom`  
+**cdn**: [unpkg.com/@luwes/little-vdom](https://unpkg.com/@luwes/little-vdom)  
+
+---
+
 - 600B Virtual DOM
 - Components
 - State
@@ -11,10 +16,9 @@
 - Refs
 - Style maps
 
-Use reactive JSX with minimal overhead.  
-This code is not published to NPM, best to copy / paste the script in your own codebase.
+Use reactive JSX with minimal overhead.
 
-## Usage
+## Usage ([Codepen](https://codepen.io/luwes/pen/ZEXPbzE?editors=0011))
 
 ```jsx
 /** @jsx h */

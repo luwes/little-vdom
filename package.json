@@ -1,5 +1,5 @@
 {
-  "name": "little-vdom",
+  "name": "@luwes/little-vdom",
   "version": "0.3.0",
   "description": "Fork from developit/little-vdom",
   "type": "module",
