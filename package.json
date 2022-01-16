@@ -9,8 +9,8 @@
     "build": "npm run minify && npm run size",
     "minify": "terser little-vdom.js -c -m toplevel=true --mangle-props regex=/^_/ -o dist/little-vdom.js",
     "size": "echo \"gzip: $(cat dist/little-vdom.js | gzip -c9 | wc -c)\" && echo \"brotli: $(cat dist/little-vdom.js | brotli | wc -c)\" && echo ''",
-    "test": "web-test-runner test.jsx",
-    "test:watch": "web-test-runner test.jsx --watch"
+    "test": "web-test-runner **/*test.jsx --config test/web-test-runner.config.js",
+    "test:watch": "npm run test -- --watch"
   },
   "license": "MIT",
   "devDependencies": {

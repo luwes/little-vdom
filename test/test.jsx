@@ -23,7 +23,7 @@
   SOFTWARE.
  */
 import { expect } from '@esm-bundle/chai';
-import { h, Fragment, render } from './little-vdom.js';
+import { h, Fragment, render } from '../little-vdom.js';
 import { clearLog, getLog, logCall } from './_util/logCall.js';
 import { setupScratch, teardown } from './_util/helpers.js';
 
