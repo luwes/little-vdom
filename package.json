@@ -15,10 +15,10 @@
   "license": "MIT",
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
-    "@web/dev-server": "0.1.29",
-    "@web/dev-server-esbuild": "0.2.16",
+    "@web/dev-server": "^0.1.29",
+    "@web/dev-server-esbuild": "^0.2.16",
     "@web/test-runner": "^0.13.25",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-plugin-react": "^7.28.0",
     "prettier": "^2.5.1",
     "terser": "^5.10.0"
@@ -54,7 +54,14 @@
     "rules": {
       "no-shadow": "error",
       "react/prop-types": 0,
-      "react/no-unknown-property": [2, { "ignore": ["class"] }]
+      "react/no-unknown-property": [
+        2,
+        {
+          "ignore": [
+            "class"
+          ]
+        }
+      ]
     }
   }
 }
