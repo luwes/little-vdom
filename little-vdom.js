@@ -14,7 +14,7 @@ const h = (type, props, ...children) => {
 
 const Fragment = (props) => {
   return props.children;
-}
+};
 
 const render = (newVNode, dom, oldVNode = dom._vnode || (dom._vnode = {})) => {
   return diff(h(Fragment, {}, [newVNode]), dom, oldVNode);
@@ -83,6 +83,11 @@ const diff = (newVNode, dom, oldVNode, currentChildIndex) => {
             for (const n in value) {
               newDom.style[n] = value[n];
             }
+          } else if (
+            value != (oldVNode._props && oldVNode._props[name]) &&
+            name in newDom
+          ) {
+            newDom[name] = value;
           } else if (value != null) {
             newDom.setAttribute(name, value);
           } else {
@@ -119,22 +124,19 @@ const diffChildren = (parentDom, newChildren, oldVNode) => {
     .map((child, index) => {
       // If the vnode has no children we assume that we have a string and
       // convert it into a text vnode.
-      const nextNewChild = child._children
-        ? child
-        : h('', '' + child);
+      const nextNewChild = child._children ? child : h('', '' + child);
 
       // If we have previous children we search for one that matches our
       // current vnode.
       const nextOldChild =
         oldChildren.find((oldChild, childIndex) => {
-          let result = (
+          let result =
             oldChild &&
             oldChild._type == nextNewChild._type &&
             oldChild.key == nextNewChild.key &&
             (childIndex == index && (index = undefined),
             (oldChildren[childIndex] = 0),
-            oldChild)
-          );
+            oldChild);
           // if (result) console.log('found vnode', result);
           return result;
         }) || {};
