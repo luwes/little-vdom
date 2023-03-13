@@ -144,20 +144,16 @@ const diffChildren = (parentDom, newChildren, oldVNode) => {
     });
 
   // remove old children if there are any
-  oldChildren.map((oldChild) => {
-    // remove fragment children
-    if (oldChild._patched && oldChild._patched._patched) {
-      oldChild._patched._patched._normalizedChildren.map(i => {
-        i.dom && i.dom.remove()
-      })
-    }
-    const node = (oldChild._patched && oldChild._patched.dom) || oldChild.dom;
-    if (node) {
-      node.remove();
-    }
-  });
+  oldChildren.map((oldChild) => removePatchedChildren(oldChild))
 
   return oldVNode;
 };
+function removePatchedChildren(child) {
+  const { _children = [], _normalizedChildren=[], _patched } = child
+  // remove children
+  _children.concat(_patched).map(c => c && removePatchedChildren(c))
+  // remove dom from _normalizedChildren or itself
+  _normalizedChildren.concat(child).map(i => i && i.dom && i.dom.remove())
+}
 
 export { h, Fragment, render };
