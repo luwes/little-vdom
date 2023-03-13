@@ -145,6 +145,12 @@ const diffChildren = (parentDom, newChildren, oldVNode) => {
 
   // remove old children if there are any
   oldChildren.map((oldChild) => {
+    // remove fragment children
+    if (oldChild._patched && oldChild._patched._patched) {
+      oldChild._patched._patched._normalizedChildren.map(i => {
+        i.dom && i.dom.remove()
+      })
+    }
     const node = (oldChild._patched && oldChild._patched.dom) || oldChild.dom;
     if (node) {
       node.remove();
