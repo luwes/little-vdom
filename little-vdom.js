@@ -150,11 +150,11 @@ const diffChildren = (parentDom, newChildren, oldVNode) => {
 };
 
 function removePatchedChildren(child) {
-  const { _children = [], _normalizedChildren=[], _patched } = child
+  const { _children = [], _patched } = child
   // remove children
   _children.concat(_patched).map(c => c && removePatchedChildren(c))
-  // remove dom from _normalizedChildren or itself
-  _normalizedChildren.concat(child).map(i => i && i.dom && i.dom.remove())
+  // remove dom
+  child.dom && child.dom.remove()
 }
 
 export { h, Fragment, render };
