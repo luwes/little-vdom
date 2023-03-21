@@ -144,14 +144,17 @@ const diffChildren = (parentDom, newChildren, oldVNode) => {
     });
 
   // remove old children if there are any
-  oldChildren.map((oldChild) => {
-    const node = (oldChild._patched && oldChild._patched.dom) || oldChild.dom;
-    if (node) {
-      node.remove();
-    }
-  });
+  oldChildren.map(removePatchedChildren)
 
   return oldVNode;
 };
+
+function removePatchedChildren(child) {
+  const { _children = [], _patched } = child
+  // remove children
+  _children.concat(_patched).map(c => c && removePatchedChildren(c))
+  // remove dom
+  child.dom && child.dom.remove()
+}
 
 export { h, Fragment, render };
