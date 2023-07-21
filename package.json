@@ -1,6 +1,6 @@
 {
   "name": "@luwes/little-vdom",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Fork from developit/little-vdom",
   "type": "module",
   "main": "dist/little-vdom.js",
