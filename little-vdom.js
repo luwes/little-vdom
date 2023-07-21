@@ -157,4 +157,4 @@ function removePatchedChildren(child) {
   child.dom && child.dom.remove()
 }
 
-export { h, Fragment, render };
+export { h, Fragment, render, diff };
